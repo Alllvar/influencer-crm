@@ -22,6 +22,12 @@ export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
     return;
   }
 
+  // Unique index violation (e.g. two requests registering the same email at the same moment).
+  if (err?.code === 11000) {
+    res.status(409).json({ error: { message: `Duplicate value: ${Object.keys(err.keyValue ?? {}).join(', ')}` } });
+    return;
+  }
+
   // Anything else is a bug: log it, and never leak internals to the client in production.
   console.error(err);
   res.status(500).json({
