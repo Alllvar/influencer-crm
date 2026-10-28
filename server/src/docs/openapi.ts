@@ -76,7 +76,10 @@ export const openApiSpec = {
         summary: 'Log in',
         security: [],
         requestBody: body(loginSchema),
-        responses: { 200: ok('User + access token; refresh token in an httpOnly cookie'), 401: ok('Wrong credentials') },
+        responses: {
+          200: ok('User + access token; refresh token in an httpOnly cookie'),
+          401: ok('Wrong credentials'),
+        },
       },
     },
     '/api/auth/refresh': {
@@ -109,7 +112,11 @@ export const openApiSpec = {
     },
     '/api/creators/{id}': {
       parameters: [idParam()],
-      get: { tags: ['Creators'], summary: 'Creator profile with their campaigns', responses: { 200: ok('Creator'), 404: errors[404] } },
+      get: {
+        tags: ['Creators'],
+        summary: 'Creator profile with their campaigns',
+        responses: { 200: ok('Creator'), 404: errors[404] },
+      },
       patch: {
         tags: ['Creators'],
         summary: 'Update a creator',
@@ -138,14 +145,22 @@ export const openApiSpec = {
     },
     '/api/campaigns/{id}': {
       parameters: [idParam()],
-      get: { tags: ['Campaigns'], summary: 'Campaign with populated creator deals', responses: { 200: ok('Campaign'), 404: errors[404] } },
+      get: {
+        tags: ['Campaigns'],
+        summary: 'Campaign with populated creator deals',
+        responses: { 200: ok('Campaign'), 404: errors[404] },
+      },
       patch: {
         tags: ['Campaigns'],
         summary: 'Update a campaign',
         requestBody: body(updateCampaignSchema),
         responses: { 200: ok('Updated'), 400: errors[400], 404: errors[404] },
       },
-      delete: { tags: ['Campaigns'], summary: 'Delete a campaign (admin)', responses: { 204: ok('Deleted'), 403: ok('Admins only') } },
+      delete: {
+        tags: ['Campaigns'],
+        summary: 'Delete a campaign (admin)',
+        responses: { 204: ok('Deleted'), 403: ok('Admins only') },
+      },
     },
     '/api/campaigns/{id}/creators': {
       parameters: [idParam()],
@@ -164,13 +179,21 @@ export const openApiSpec = {
         requestBody: body(updateDealSchema),
         responses: { 200: ok('Updated campaign'), 404: errors[404] },
       },
-      delete: { tags: ['Campaigns'], summary: 'Remove a creator from the campaign', responses: { 200: ok('Updated campaign') } },
+      delete: {
+        tags: ['Campaigns'],
+        summary: 'Remove a creator from the campaign',
+        responses: { 200: ok('Updated campaign') },
+      },
     },
     '/api/stats/overview': {
       get: { tags: ['Stats'], summary: 'Dashboard numbers (MongoDB aggregations)', responses: { 200: ok('Overview') } },
     },
     '/api/users': {
-      get: { tags: ['Users'], summary: 'List team members (admin)', responses: { 200: ok('Users'), 403: ok('Admins only') } },
+      get: {
+        tags: ['Users'],
+        summary: 'List team members (admin)',
+        responses: { 200: ok('Users'), 403: ok('Admins only') },
+      },
     },
     '/api/users/{id}/role': {
       parameters: [idParam()],

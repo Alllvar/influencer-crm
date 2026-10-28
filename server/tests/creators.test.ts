@@ -39,7 +39,10 @@ describe('creators CRUD', () => {
 
   it('rejects the same handle on the same platform', async () => {
     await createCreator();
-    const res = await request(app).post('/api/creators').set(auth(manager.token)).send(creator({ handle: 'anna.style' }));
+    const res = await request(app)
+      .post('/api/creators')
+      .set(auth(manager.token))
+      .send(creator({ handle: 'anna.style' }));
     expect(res.status).toBe(409);
   });
 
@@ -55,7 +58,9 @@ describe('creators CRUD', () => {
 
   it('returns 400 for a malformed id and 404 for a missing one', async () => {
     expect((await request(app).get('/api/creators/not-an-id').set(auth(manager.token))).status).toBe(400);
-    expect((await request(app).get('/api/creators/507f1f77bcf86cd799439011').set(auth(manager.token))).status).toBe(404);
+    expect((await request(app).get('/api/creators/507f1f77bcf86cd799439011').set(auth(manager.token))).status).toBe(
+      404,
+    );
   });
 
   it('lets only admins delete', async () => {
@@ -67,9 +72,27 @@ describe('creators CRUD', () => {
 
 describe('GET /api/creators (search, filters, pagination)', () => {
   beforeEach(async () => {
-    await createCreator({ name: 'Anna Style', handle: 'anna', platform: 'instagram', followers: 120_000, niches: ['beauty'] });
-    await createCreator({ name: 'Max Games', handle: 'maxgames', platform: 'twitch', followers: 800_000, niches: ['gaming'] });
-    await createCreator({ name: 'Olena Cooks', handle: 'olena', platform: 'youtube', followers: 45_000, niches: ['food'] });
+    await createCreator({
+      name: 'Anna Style',
+      handle: 'anna',
+      platform: 'instagram',
+      followers: 120_000,
+      niches: ['beauty'],
+    });
+    await createCreator({
+      name: 'Max Games',
+      handle: 'maxgames',
+      platform: 'twitch',
+      followers: 800_000,
+      niches: ['gaming'],
+    });
+    await createCreator({
+      name: 'Olena Cooks',
+      handle: 'olena',
+      platform: 'youtube',
+      followers: 45_000,
+      niches: ['food'],
+    });
   });
 
   const list = (query: string) => request(app).get(`/api/creators?${query}`).set(auth(manager.token));

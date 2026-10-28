@@ -12,12 +12,18 @@ export const createCreatorSchema = z.object({
     .max(60)
     .transform((h) => h.replace(/^@/, '')),
   platform: z.enum(PLATFORMS),
-  email: z.email().optional().or(z.literal('').transform(() => undefined)),
+  email: z
+    .email()
+    .optional()
+    .or(z.literal('').transform(() => undefined)),
   country: z.string().trim().max(60).optional(),
   niches: z.array(z.string().trim().toLowerCase().min(1).max(30)).max(10).default([]),
   followers: z.number().int().min(0),
   engagementRate: z.number().min(0).max(100).default(0),
-  avatarUrl: z.url().optional().or(z.literal('').transform(() => undefined)),
+  avatarUrl: z
+    .url()
+    .optional()
+    .or(z.literal('').transform(() => undefined)),
   notes: z.string().max(2000).default(''),
 });
 
@@ -35,5 +41,7 @@ export const listCreatorsQuery = paginationSchema.extend({
   platform: z.enum(PLATFORMS).optional(),
   niche: z.string().trim().toLowerCase().optional(),
   minFollowers: z.coerce.number().int().min(0).optional(),
-  sort: z.enum(['followers', '-followers', 'engagementRate', '-engagementRate', 'name', '-createdAt']).default('-followers'),
+  sort: z
+    .enum(['followers', '-followers', 'engagementRate', '-engagementRate', 'name', '-createdAt'])
+    .default('-followers'),
 });

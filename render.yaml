@@ -1,0 +1,24 @@
+# Render Blueprint: one web service that serves both the API and the built React app.
+# Create a free MongoDB Atlas cluster first and paste its connection string as MONGODB_URI.
+services:
+  - type: web
+    name: influencer-crm
+    runtime: node
+    plan: free
+    # --include=dev: the build needs TypeScript and Vite, which are dev dependencies.
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: '22'
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_ACCESS_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: SEED_DEMO
+        value: 'true'

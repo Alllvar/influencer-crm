@@ -4,7 +4,14 @@ import { PLATFORMS } from '../creators/creator.model';
 export const CAMPAIGN_STATUSES = ['draft', 'active', 'completed', 'cancelled'] as const;
 
 // The deal pipeline for each creator inside a campaign (the columns of the board in the UI).
-export const PIPELINE_STAGES = ['invited', 'negotiating', 'contracted', 'content_review', 'published', 'declined'] as const;
+export const PIPELINE_STAGES = [
+  'invited',
+  'negotiating',
+  'contracted',
+  'content_review',
+  'published',
+  'declined',
+] as const;
 export type PipelineStage = (typeof PIPELINE_STAGES)[number];
 
 const campaignCreatorSchema = new Schema(

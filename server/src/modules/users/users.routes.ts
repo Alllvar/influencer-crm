@@ -17,7 +17,11 @@ usersRouter.get('/', async (_req, res) => {
 
 usersRouter.patch('/:id/role', validateBody(z.object({ role: z.enum(ROLES) })), async (req, res) => {
   if (req.params.id === req.user!.id) throw new HttpError(400, 'You cannot change your own role');
-  const user = await User.findByIdAndUpdate(req.params.id, { role: req.body.role }, { returnDocument: 'after', runValidators: true });
+  const user = await User.findByIdAndUpdate(
+    req.params.id,
+    { role: req.body.role },
+    { returnDocument: 'after', runValidators: true },
+  );
   if (!user) throw new HttpError(404, 'User not found');
   res.json({ user });
 });

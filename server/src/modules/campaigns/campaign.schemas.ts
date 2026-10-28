@@ -16,7 +16,8 @@ const campaignFields = z.object({
   endDate: z.coerce.date(),
 });
 
-const datesInOrder = (d: { startDate?: Date; endDate?: Date }) => !d.startDate || !d.endDate || d.endDate >= d.startDate;
+const datesInOrder = (d: { startDate?: Date; endDate?: Date }) =>
+  !d.startDate || !d.endDate || d.endDate >= d.startDate;
 const datesMessage = { message: 'End date must be on or after the start date', path: ['endDate'] };
 
 export const createCampaignSchema = campaignFields

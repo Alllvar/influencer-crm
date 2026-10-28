@@ -125,7 +125,10 @@ describe('GET /api/stats/overview', () => {
     expect(res.status).toBe(200);
     expect(res.body.campaigns).toMatchObject({ total: 1, active: 1, activeBudget: 10_000, activeSpent: 2000 });
     expect(res.body.creators.total).toBe(1);
-    expect(res.body.pipeline.find((p: { stage: string }) => p.stage === 'published')).toMatchObject({ count: 1, fees: 2000 });
+    expect(res.body.pipeline.find((p: { stage: string }) => p.stage === 'published')).toMatchObject({
+      count: 1,
+      fees: 2000,
+    });
     expect(res.body.pipeline).toHaveLength(6);
   });
 });

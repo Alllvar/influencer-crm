@@ -30,7 +30,9 @@ describe('POST /api/auth/register', () => {
   });
 
   it('validates the input', async () => {
-    const res = await request(app).post('/api/auth/register').send({ email: 'not-an-email', name: 'A', password: '123' });
+    const res = await request(app)
+      .post('/api/auth/register')
+      .send({ email: 'not-an-email', name: 'A', password: '123' });
     expect(res.status).toBe(400);
     expect(Object.keys(res.body.error.details)).toEqual(expect.arrayContaining(['email', 'name', 'password']));
   });
@@ -47,7 +49,9 @@ describe('POST /api/auth/login', () => {
   it('gives the same 401 for a wrong password and an unknown email', async () => {
     const { user } = await registerUser();
     const wrongPassword = await request(app).post('/api/auth/login').send({ email: user.email, password: 'nope-nope' });
-    const unknownEmail = await request(app).post('/api/auth/login').send({ email: 'ghost@test.dev', password: 'nope-nope' });
+    const unknownEmail = await request(app)
+      .post('/api/auth/login')
+      .send({ email: 'ghost@test.dev', password: 'nope-nope' });
 
     expect(wrongPassword.status).toBe(401);
     expect(unknownEmail.status).toBe(401);

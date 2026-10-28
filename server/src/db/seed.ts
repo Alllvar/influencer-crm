@@ -7,7 +7,15 @@ import { Campaign, type PipelineStage } from '../modules/campaigns/campaign.mode
 export const DEMO_ADMIN = { email: 'demo@influencer-crm.dev', password: 'demo12345', name: 'Demo Admin' };
 export const DEMO_MANAGER = { email: 'manager@influencer-crm.dev', password: 'demo12345', name: 'Mia Manager' };
 
-type CreatorSeed = [name: string, handle: string, platform: Platform, followers: number, er: number, niches: string[], country: string];
+type CreatorSeed = [
+  name: string,
+  handle: string,
+  platform: Platform,
+  followers: number,
+  er: number,
+  niches: string[],
+  country: string,
+];
 
 // Fictional creators: any resemblance to real accounts is accidental.
 const CREATORS: CreatorSeed[] = [
