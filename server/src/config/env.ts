@@ -18,6 +18,11 @@ const envSchema = z
     JWT_REFRESH_SECRET: optionalSecret,
     JWT_ACCESS_TTL: z.string().default('15m'),
     REFRESH_TTL_DAYS: z.coerce.number().int().positive().default(7),
+    // "true" fills an empty database with demo data on start (for the public demo deployment).
+    SEED_DEMO: z
+      .enum(['true', 'false', ''])
+      .default('false')
+      .transform((v) => v === 'true'),
   })
   .transform((e, ctx) => {
     if (e.NODE_ENV === 'production' && (!e.JWT_ACCESS_SECRET || !e.JWT_REFRESH_SECRET)) {

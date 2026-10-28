@@ -5,7 +5,7 @@ let memoryServer: { stop: () => Promise<boolean> } | undefined;
 
 // Connects to MONGODB_URI. Without it (local development only) it starts a temporary
 // in-memory MongoDB, so the project runs without installing anything. Data is lost on restart.
-export async function connectDb(): Promise<void> {
+export async function connectDb(): Promise<{ inMemory: boolean }> {
   let uri = env.MONGODB_URI;
 
   if (!uri) {
@@ -19,6 +19,7 @@ export async function connectDb(): Promise<void> {
 
   await mongoose.connect(uri);
   console.log(`MongoDB connected: ${mongoose.connection.host}/${mongoose.connection.name}`);
+  return { inMemory: Boolean(memoryServer) };
 }
 
 export async function disconnectDb(): Promise<void> {
